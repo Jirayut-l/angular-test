@@ -1,9 +1,8 @@
-@use '~bootstrap/scss/bootstrap';
-@use 'assets/scss/abstracts/fonts';
+@use 'assets/scss/abstracts';
+@import 'node_modules/bootstrap/scss/bootstrap';
+
 
 body {
-  font-size: 1.2rem;
-  font-family: fonts.$font-family-base;
+  font-size: abstracts.$font-size;
+  font-family: abstracts.$font-family-base;
 }
-
-
