@@ -8,11 +8,19 @@
       "files": [
         "*.ts"
       ],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": ["tsconfig.json", "tsconfig.app.json", "tsconfig.spec.json"],
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "createDefaultProgram": true
+      },
+      "plugins": ["@typescript-eslint"],
       "extends": [
-        "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates"
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:prettier/recommended"
       ],
       "rules": {
         "@angular-eslint/directive-selector": [
@@ -30,17 +38,117 @@
             "prefix": "app",
             "style": "kebab-case"
           }
+        ],
+        "@angular-eslint/no-empty-lifecycle-method": "warn",
+        //Supported Rules
+        "@typescript-eslint/adjacent-overload-signatures": "error",
+        "@typescript-eslint/array-type": "error",
+        "@typescript-eslint/await-thenable": "error",
+        "@typescript-eslint/no-empty-interface": [
+          "error",
+          {
+            "allowSingleExtends": false
+          }
+        ],
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-extra-non-null-assertion": "error",
+        "@typescript-eslint/no-for-in-array": "error",
+        "@typescript-eslint/no-misused-new": "error",
+        "@typescript-eslint/no-non-null-asserted-optional-chain": "warn",
+        "@typescript-eslint/no-non-null-assertion": "warn",
+        "@typescript-eslint/no-unnecessary-type-constraint": "warn",
+        "@typescript-eslint/no-unsafe-argument": "warn",
+        "@typescript-eslint/no-unsafe-call": "error",
+        "@typescript-eslint/no-unsafe-member-access": "warn",
+        "@typescript-eslint/no-unsafe-return": "warn",
+        "@typescript-eslint/no-var-requires": "error",
+        "@typescript-eslint/prefer-as-const": "warn",
+        "@typescript-eslint/prefer-namespace-keyword": "error",
+        "@typescript-eslint/restrict-plus-operands": "error",
+        "@typescript-eslint/unbound-method": [
+          "error",
+          {
+            "ignoreStatic": true
+          }
+        ],
+        "@typescript-eslint/type-annotation-spacing": [
+          "error",
+          {
+            "before": false,
+            "after": true,
+            "overrides": {
+              "arrow": {
+                "before": true,
+                "after": true
+              }
+            }
+          }
+        ],
+        "@typescript-eslint/no-non-null-asserted-nullish-coalescing": "warn",
+        "no-import-assign": "error",
+        //
+
+        //Extension Rules
+        "@typescript-eslint/no-unused-vars": ["error"],
+        "@typescript-eslint/typedef": [
+          "error",
+          {
+            "parameter": true
+          }
+        ],
+        "@typescript-eslint/space-before-blocks": ["error"],
+        "@typescript-eslint/comma-dangle": [
+          "error",
+          {
+            "arrays": "only-multiline",
+            "objects": "only-multiline",
+            "imports": "only-multiline",
+            "functions": "only-multiline",
+            "enums": "only-multiline"
+          }
+        ],
+        "@typescript-eslint/ban-types": "error",
+        "@typescript-eslint/no-floating-promises": "error",
+        "@typescript-eslint/no-invalid-void-type": "warn",
+        "@typescript-eslint/explicit-function-return-type": [
+          "error",
+          {
+            "allowExpressions": true
+          }
+        ],
+        "@typescript-eslint/no-extra-semi": ["error"],
+        "@typescript-eslint/no-empty-function": ["error"],
+        "@typescript-eslint/no-implied-eval": ["error"],
+        "@typescript-eslint/require-await": "error",
+        "@typescript-eslint/space-infix-ops": ["error"],
+        "max-len": [
+          "error",
+          {
+            "code": 120,
+            "ignorePattern": "^import [^,]+ from"
+          }
         ]
+        //
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {}
+    },
+    {
+      "files": ["*.html"],
+      "excludedFiles": ["*inline-template-*.component.html"],
+      "extends": ["plugin:prettier/recommended"],
+      "rules": {
+        "prettier/prettier": [
+          "error",
+          {
+            "parser": "angular",
+            "endOfLine": "auto"
+          }
+        ]
+      }
     }
   ]
 }
