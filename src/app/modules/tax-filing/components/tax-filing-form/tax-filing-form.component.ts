@@ -23,12 +23,11 @@ export class TaxFilingFormComponent implements OnInit {
     { value: '011', text: 'Nov' },
     { value: '012', text: 'Dec' },
   ];
-
   form = new FormGroup({
     typeOfFiling: new FormControl('0', Validators.required),
     vatMonth: new FormControl('', Validators.required),
     vatYear: new FormControl('', Validators.required),
-    totalTaxable: new FormControl(''),
+    totalTaxable: new FormControl('', Validators.required),
     totalVatRemitted: new FormControl(''),
     surcharge: new FormControl({ value: '', disabled: true }),
     penalty: new FormControl({ value: '', disabled: true }),
@@ -43,8 +42,13 @@ export class TaxFilingFormComponent implements OnInit {
     return this.form.controls['vatYear'];
   }
 
+  get totalTaxable(): AbstractControl {
+    return this.form.controls['totalTaxable'];
+  }
+
   ngOnInit(): void {
     this.setYear();
+    this.subscribeTotalTaxableChange();
   }
 
   public setYear(): void {
@@ -53,5 +57,27 @@ export class TaxFilingFormComponent implements OnInit {
       this.years.push(i);
     }
     this.years.reverse();
+  }
+
+  public disabledMonth(indexMonth: number): string {
+    const monthCurrent: number = new Date().getMonth();
+    if (indexMonth > monthCurrent) {
+      return 'disabled';
+    }
+    return '';
+  }
+
+  public subscribeTotalTaxableChange(): void {
+    this.form.controls['totalTaxable'].valueChanges.subscribe(res => {
+      const castNumber = Number(res);
+      const totalVatRemitted = (castNumber * 0.07).toFixed(2);
+      this.form.controls['totalVatRemitted'].setValue(totalVatRemitted);
+      const surcharge = (castNumber * 0.01).toFixed(2);
+      this.form.controls['surcharge'].setValue(surcharge);
+      const penalty = 200;
+      this.form.controls['penalty'].setValue(penalty.toString());
+      const totalAmountVat = Number(totalVatRemitted) + Number(surcharge) + penalty;
+      this.form.controls['totalAmountVat'].setValue(totalAmountVat.toFixed(2));
+    });
   }
 }

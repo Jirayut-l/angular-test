@@ -12,7 +12,7 @@
             <input
               class="form-check-input"
               type="radio"
-              name="type-of-filing-radio-options"
+              name="typeOfFiling"
               id="value-type-of-filing-ordinary"
               value="0"
               formControlName="typeOfFiling" />
@@ -23,9 +23,10 @@
             <input
               class="form-check-input"
               type="radio"
-              name="type-of-filing-radio-options"
+              name="typeOfFiling"
               id="value-type-of-filing-additional"
-              value="1" />
+              value="1"
+              formControlName="typeOfFiling" />
             <label class="form-check-label" for="value-type-of-filing-additional">Additional Filing</label>
             <i class="bi bi-question-circle mx-2"></i>
           </div>
@@ -37,7 +38,7 @@
             <div class="col-12 col-md-6 col-xl-4">
               <select id="vat-month" class="form-select mb-3" formControlName="vatMonth">
                 <option value="">Selection</option>
-                <option *ngFor="let month of monthList" [value]="month.value">
+                <option *ngFor="let month of monthList; index as i" [disabled]="disabledMonth(i)" [value]="month.value">
                   {{ month.text }}
                 </option>
               </select>
@@ -71,22 +72,32 @@
             >
             <div class="col-12 col-md-4">
               <input
-                type="number"
+                type="text"
                 formControlName="totalTaxable"
                 class="form-control"
                 id="value-tax-computation-taxable"
+                mask="separator.2"
+                thousandSeparator=","
+                max="20"
                 placeholder="THB" />
             </div>
+            <span *ngIf="totalTaxable.touched && totalTaxable.errors?.['required']" class="help-block">{{
+              messageError
+            }}</span>
           </div>
           <div class="mb-3 row">
-            <label
-              for="value-tax-computation-vat-remitted"
-              formControlName="totalVatRemitted"
-              class="col-12 col-md-8 col-form-label"
+            <label for="value-tax-computation-vat-remitted" class="col-12 col-md-8 col-form-label"
               >2. Total VAT to be remitted (7% of 1.)</label
             >
             <div class="col-12 col-md-4">
-              <input type="number" class="form-control" id="value-tax-computation-vat-remitted" placeholder="THB" />
+              <input
+                type="text"
+                formControlName="totalVatRemitted"
+                class="form-control"
+                id="value-tax-computation-vat-remitted"
+                mask="separator.2"
+                thousandSeparator=","
+                placeholder="THB" />
             </div>
           </div>
         </div>
@@ -100,10 +111,12 @@
 
             <div class="col-12 col-md-4">
               <input
-                type="number"
+                type="text"
                 formControlName="surcharge"
                 class="form-control"
                 id="value-in-case-of-last-filing-surcharge"
+                mask="separator.2"
+                thousandSeparator=","
                 placeholder="THB" />
             </div>
           </div>
@@ -115,10 +128,12 @@
 
             <div class="col-12 col-md-4">
               <input
-                type="number"
+                type="text"
                 formControlName="penalty"
                 class="form-control"
                 id="value-in-case-of-last-filing-penalty"
+                mask="separator.2"
+                thousandSeparator=","
                 placeholder="THB" />
             </div>
           </div>
@@ -130,10 +145,12 @@
 
             <div class="col-12 col-md-4">
               <input
-                type="number"
+                type="text"
                 formControlName="totalAmountVat"
                 class="form-control"
                 id="value-in-case-of-last-filing-total-amount"
+                mask="separator.2"
+                thousandSeparator=","
                 placeholder="THB" />
             </div>
           </div>
@@ -142,4 +159,8 @@
     </form>
   </div>
 </div>
-<span>Values:</span>{{ form.value | json }}
+
+<div class="mt-3">
+  <button type="button" class="btn btn-secondary btn-lg">Back</button>
+  <button type="button" class="btn btn-primary btn-lg mx-3">Next</button>
+</div>
