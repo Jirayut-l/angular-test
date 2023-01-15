@@ -1,1 +1,1 @@
-export * from '../text-filing-review';
+export * from './text-filing-review.component';

@@ -1,6 +1,14 @@
 @use 'assets/scss/abstracts';
-@import 'node_modules/bootstrap/scss/bootstrap';
+@forward 'node_modules/bootstrap/scss/bootstrap';
+@forward 'node_modules/bootstrap-icons/font/bootstrap-icons';
 
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
   font-size: abstracts.$font-size;

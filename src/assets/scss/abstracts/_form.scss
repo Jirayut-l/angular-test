@@ -1,0 +1,28 @@
+@use 'color';
+
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched {
+  border: 2px solid color.$danger-color;
+}
+
+input.ng-valid.ng-touched,
+.ng-valid[required].ng-touched,
+textarea.ng-valid.ng-touched,
+.ng-valid[required].ng-touched,
+select.ng-valid.ng-touched,
+.ng-valid[required].ng-touched {
+  border: 2px solid color.$success-color;
+}
+
+.required:after {
+  margin-left: 5px;
+  content: '*';
+  color: color.$danger-color;
+}
+
+.help-block {
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+  color: color.$danger-color;
+}

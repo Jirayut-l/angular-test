@@ -1,0 +1,21 @@
+hr {
+  border-top: 1px solid;
+  opacity: 0.25;
+  margin: 0;
+}
+
+.container > * {
+  padding-top: 16px;
+}
+
+::-webkit-input-placeholder {
+  text-align: right;
+}
+
+::-moz-placeholder {
+  text-align: right;
+}
+
+::placeholder {
+  text-align: right;
+}
