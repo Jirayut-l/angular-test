@@ -1,171 +1,234 @@
-<div class="card mt-5">
-  <div class="card-body">
-    <form [formGroup]="form">
-      <div class="container">
-        <div class="head-tax-filing-detail">
-          <h4>1. Tax Filing Detail</h4>
-          <hr />
+<div class="simple-example">
+  <h2>Example 1: Basic Stepper</h2>
+  <app-tax-filing-stepper>
+    <cdk-step>
+      <div class="card mt-5">
+        <div class="card-body">
+          <form [formGroup]="form">
+            <div class="container">
+              <div class="head-tax-filing-detail">
+                <h4>1. Tax Filing Detail</h4>
+                <hr />
+              </div>
+              <div class="type-of-filing">
+                <label id="label-type-of-filing" class="form-label d-block required">Type of filing</label>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="typeOfFiling"
+                    id="value-type-of-filing-ordinary"
+                    value="0"
+                    formControlName="typeOfFiling" />
+                  <label class="form-check-label" for="value-type-of-filing-ordinary">Ordinary Filing</label
+                  ><i class="bi bi-question-circle mx-2"></i>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="typeOfFiling"
+                    id="value-type-of-filing-additional"
+                    value="1"
+                    formControlName="typeOfFiling" />
+                  <label class="form-check-label" for="value-type-of-filing-additional">Additional Filing</label>
+                  <i class="bi bi-question-circle mx-2"></i>
+                </div>
+              </div>
+
+              <div class="vat-month">
+                <label class="form-label required mt-3" id="label-vat-month" title="Pay Type">VAT Month</label>
+                <div class="row">
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <select id="vat-month" class="form-select mb-3" formControlName="vatMonth">
+                      <option value="">Selection</option>
+                      <option
+                        *ngFor="let month of monthList; index as i"
+                        [disabled]="disabledMonth(i)"
+                        [value]="month.value">
+                        {{ month.text }}
+                      </option>
+                    </select>
+                    <span *ngIf="vatMonth.touched && vatMonth.errors?.['required']" class="help-block">{{
+                      messageError
+                    }}</span>
+                  </div>
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <select id="vat-year" class="form-select" formControlName="vatYear">
+                      <option value="">Selection</option>
+                      <option *ngFor="let year of years" [value]="year">
+                        {{ year }}
+                      </option>
+                    </select>
+                    <span *ngIf="vatYear.touched && vatYear.errors?.['required']" class="help-block">{{
+                      messageError
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="head-tax-computation">
+                <div class="d-flex justify-content-between pt-3">
+                  <h4>2. Tax Computation</h4>
+                  <h5><u>View Exchange Rate</u></h5>
+                </div>
+                <hr />
+              </div>
+              <div class="provide-total">
+                <label><b class="required pt-3">Provide total value taxable electronic service</b></label>
+                <div class="mt-3 mb-3 row">
+                  <label for="value-tax-computation-taxable" class="col-12 col-md-8 col-form-label"
+                    >1. Total value of taxable electronic service exclusive of vat</label
+                  >
+                  <div class="col-12 col-md-4">
+                    <input
+                      type="text"
+                      formControlName="totalTaxable"
+                      class="form-control"
+                      id="value-tax-computation-taxable"
+                      mask="separator.2"
+                      thousandSeparator=","
+                      max="20"
+                      placeholder="THB" />
+                  </div>
+                  <span *ngIf="totalTaxable.touched && totalTaxable.errors?.['required']" class="help-block">{{
+                    messageError
+                  }}</span>
+                </div>
+                <div class="mb-3 row">
+                  <label for="value-tax-computation-vat-remitted" class="col-12 col-md-8 col-form-label"
+                    >2. Total VAT to be remitted (7% of 1.)</label
+                  >
+                  <div class="col-12 col-md-4">
+                    <input
+                      type="text"
+                      formControlName="totalVatRemitted"
+                      class="form-control"
+                      id="value-tax-computation-vat-remitted"
+                      mask="separator.2"
+                      thousandSeparator=","
+                      placeholder="THB" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="in-case-of-last-filing">
+                <label><b class="required pt-3">In case of late filing and payment, or additional filing</b></label>
+                <div class="pt-2 mb-3 row">
+                  <label for="value-in-case-of-last-filing-surcharge" class="col-12 col-md-8 col-form-label"
+                    >3. Surcharge <i class="bi bi-question-circle mx-1"></i
+                  ></label>
+
+                  <div class="col-12 col-md-4">
+                    <input
+                      type="text"
+                      formControlName="surcharge"
+                      class="form-control"
+                      id="value-in-case-of-last-filing-surcharge"
+                      mask="separator.2"
+                      thousandSeparator=","
+                      placeholder="THB" />
+                  </div>
+                </div>
+
+                <div class="mb-3 row">
+                  <label for="value-in-case-of-last-filing-penalty" class="col-12 col-md-8 col-form-label"
+                    >4. Penalty <i class="bi bi-question-circle mx-1"></i
+                  ></label>
+
+                  <div class="col-12 col-md-4">
+                    <input
+                      type="text"
+                      formControlName="penalty"
+                      class="form-control"
+                      id="value-in-case-of-last-filing-penalty"
+                      mask="separator.2"
+                      thousandSeparator=","
+                      placeholder="THB" />
+                  </div>
+                </div>
+
+                <div class="mb-3 row">
+                  <label for="value-in-case-of-last-filing-total-amount" class="col-12 col-md-8 col-form-label"
+                    >4. Total amount of VAT, surcharge, and penalty to be remitted (2+3+4)
+                  </label>
+
+                  <div class="col-12 col-md-4">
+                    <input
+                      type="text"
+                      formControlName="totalAmountVat"
+                      class="form-control"
+                      id="value-in-case-of-last-filing-total-amount"
+                      mask="separator.2"
+                      thousandSeparator=","
+                      placeholder="THB" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
-        <div class="type-of-filing">
-          <label id="label-type-of-filing" class="form-label d-block required">Type of filing</label>
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="typeOfFiling"
-              id="value-type-of-filing-ordinary"
-              value="0"
-              formControlName="typeOfFiling" />
-            <label class="form-check-label" for="value-type-of-filing-ordinary">Ordinary Filing</label
-            ><i class="bi bi-question-circle mx-2"></i>
-          </div>
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="typeOfFiling"
-              id="value-type-of-filing-additional"
-              value="1"
-              formControlName="typeOfFiling" />
-            <label class="form-check-label" for="value-type-of-filing-additional">Additional Filing</label>
-            <i class="bi bi-question-circle mx-2"></i>
-          </div>
-        </div>
+      </div>
 
-        <div class="vat-month">
-          <label class="form-label required mt-3" id="label-vat-month" title="Pay Type">VAT Month</label>
-          <div class="row">
-            <div class="col-12 col-md-6 col-xl-4">
-              <select id="vat-month" class="form-select mb-3" formControlName="vatMonth">
-                <option value="">Selection</option>
-                <option *ngFor="let month of monthList; index as i" [disabled]="disabledMonth(i)" [value]="month.value">
-                  {{ month.text }}
-                </option>
-              </select>
-              <span *ngIf="vatMonth.touched && vatMonth.errors?.['required']" class="help-block">{{
-                messageError
-              }}</span>
+      <div class="mt-3">
+        <button type="button" class="btn btn-secondary btn-lg">Back</button>
+        <button type="button" class="btn btn-primary btn-lg mx-3">Next</button>
+      </div>
+    </cdk-step>
+    <cdk-step>
+      <div class="card mt-5">
+        <div class="card-body">
+          <div class="container">
+            <div class="head-tax-filing-detail">
+              <h4><b>Tax Filing Detail</b></h4>
+              <hr />
             </div>
-            <div class="col-12 col-md-6 col-xl-4">
-              <select id="vat-year" class="form-select" formControlName="vatYear">
-                <option value="">Selection</option>
-                <option *ngFor="let year of years" [value]="year">
-                  {{ year }}
-                </option>
-              </select>
-              <span *ngIf="vatYear.touched && vatYear.errors?.['required']" class="help-block">{{ messageError }}</span>
+            <div class="tax-filing-detail">
+              <div class="type-of-filing">
+                <label id="label-type-of-filing" class="form-label d-block">Type of filing</label>
+                <label id="label-vat-month" title="Pay Type">VAT Month</label>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="head-tax-computation">
-          <div class="d-flex justify-content-between pt-3">
-            <h4>2. Tax Computation</h4>
-            <h5><u>View Exchange Rate</u></h5>
-          </div>
-          <hr />
-        </div>
-        <div class="provide-total">
-          <label><b class="required pt-3">Provide total value taxable electronic service</b></label>
-          <div class="mt-3 mb-3 row">
-            <label for="value-tax-computation-taxable" class="col-12 col-md-8 col-form-label"
-              >1. Total value of taxable electronic service exclusive of vat</label
-            >
-            <div class="col-12 col-md-4">
-              <input
-                type="text"
-                formControlName="totalTaxable"
-                class="form-control"
-                id="value-tax-computation-taxable"
-                mask="separator.2"
-                thousandSeparator=","
-                max="20"
-                placeholder="THB" />
+            <div class="head-tax-computation pt-3">
+              <h4><b>Tax Computation</b></h4>
+              <hr />
             </div>
-            <span *ngIf="totalTaxable.touched && totalTaxable.errors?.['required']" class="help-block">{{
-              messageError
-            }}</span>
-          </div>
-          <div class="mb-3 row">
-            <label for="value-tax-computation-vat-remitted" class="col-12 col-md-8 col-form-label"
-              >2. Total VAT to be remitted (7% of 1.)</label
-            >
-            <div class="col-12 col-md-4">
-              <input
-                type="text"
-                formControlName="totalVatRemitted"
-                class="form-control"
-                id="value-tax-computation-vat-remitted"
-                mask="separator.2"
-                thousandSeparator=","
-                placeholder="THB" />
+            <div class="tax-computation">
+              <div class="total-value-taxable">
+                <div class="d-flex flex-wrap justify-content-between">
+                  <label><b>Total value of taxable electronic service exclusive of VAT</b></label>
+                  <label>xxxx THB</label>
+                </div>
+              </div>
+              <div class="tax-computation-remitted">
+                <div class="d-flex flex-wrap justify-content-between">
+                  <label><b>Total VAT to be remitted</b></label>
+                  <label>xxxx THB</label>
+                </div>
+                <label>(7% of Total value of taxable electronic service exclusive of VAT)</label>
+              </div>
+              <div class="tax-computation-total-amount-payable">
+                <div class="d-flex flex-wrap justify-content-between">
+                  <label><b>Total total amount Payable</b></label>
+                  <label>xxxx THB</label>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div class="in-case-of-last-filing">
-          <label><b class="required pt-3">In case of late filing and payment, or additional filing</b></label>
-          <div class="pt-2 mb-3 row">
-            <label for="value-in-case-of-last-filing-surcharge" class="col-12 col-md-8 col-form-label"
-              >3. Surcharge <i class="bi bi-question-circle mx-1"></i
-            ></label>
-
-            <div class="col-12 col-md-4">
-              <input
-                type="text"
-                formControlName="surcharge"
-                class="form-control"
-                id="value-in-case-of-last-filing-surcharge"
-                mask="separator.2"
-                thousandSeparator=","
-                placeholder="THB" />
-            </div>
-          </div>
-
-          <div class="mb-3 row">
-            <label for="value-in-case-of-last-filing-penalty" class="col-12 col-md-8 col-form-label"
-              >4. Penalty <i class="bi bi-question-circle mx-1"></i
-            ></label>
-
-            <div class="col-12 col-md-4">
-              <input
-                type="text"
-                formControlName="penalty"
-                class="form-control"
-                id="value-in-case-of-last-filing-penalty"
-                mask="separator.2"
-                thousandSeparator=","
-                placeholder="THB" />
-            </div>
-          </div>
-
-          <div class="mb-3 row">
-            <label for="value-in-case-of-last-filing-total-amount" class="col-12 col-md-8 col-form-label"
-              >4. Total amount of VAT, surcharge, and penalty to be remitted (2+3+4)
-            </label>
-
-            <div class="col-12 col-md-4">
-              <input
-                type="text"
-                formControlName="totalAmountVat"
-                class="form-control"
-                id="value-in-case-of-last-filing-total-amount"
-                mask="separator.2"
-                thousandSeparator=","
-                placeholder="THB" />
+            <div class="declaration mt-5">
+              <h4><b>Declaration</b></h4>
+              <hr />
+              <p class="pt-3">
+                I hereby certify that information given above are ture and correct and agree to be bound by such
+                information.
+              </p>
             </div>
           </div>
         </div>
       </div>
-    </form>
-  </div>
-</div>
 
-<div class="mt-3">
-  <button type="button" class="btn btn-secondary btn-lg">Back</button>
-  <button type="button" class="btn btn-primary btn-lg mx-3">Next</button>
+      <div class="mt-4 text-center">
+        <button type="button" class="btn btn-primary">Confirm and Submit</button>
+      </div>
+    </cdk-step>
+  </app-tax-filing-stepper>
 </div>
-
-<app-example-custom-stepper>
-  <cdk-step><p>This is any content of "Step 12323"</p></cdk-step>
-  <cdk-step><p>This is any content of "Step 2X12313"</p></cdk-step>
-</app-example-custom-stepper>
