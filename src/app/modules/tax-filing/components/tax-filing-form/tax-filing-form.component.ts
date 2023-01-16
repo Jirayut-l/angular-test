@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-tax-filing-form',
@@ -34,15 +34,15 @@ export class TaxFilingFormComponent implements OnInit {
     totalAmountVat: new FormControl({ value: '', disabled: true }),
   });
 
-  get vatMonth(): AbstractControl {
+  get vatMonth(): FormControl {
     return this.form.controls['vatMonth'];
   }
 
-  get vatYear(): AbstractControl {
+  get vatYear(): FormControl {
     return this.form.controls['vatYear'];
   }
 
-  get totalTaxable(): AbstractControl {
+  get totalTaxable(): FormControl {
     return this.form.controls['totalTaxable'];
   }
 
@@ -74,9 +74,9 @@ export class TaxFilingFormComponent implements OnInit {
       this.form.controls['totalVatRemitted'].setValue(totalVatRemitted);
       const surcharge = (castNumber * 0.01).toFixed(2);
       this.form.controls['surcharge'].setValue(surcharge);
-      const penalty = 200;
+      const penalty = '200.00';
       this.form.controls['penalty'].setValue(penalty.toString());
-      const totalAmountVat = Number(totalVatRemitted) + Number(surcharge) + penalty;
+      const totalAmountVat = Number(totalVatRemitted) + Number(surcharge) + Number(penalty);
       this.form.controls['totalAmountVat'].setValue(totalAmountVat.toFixed(2));
     });
   }
