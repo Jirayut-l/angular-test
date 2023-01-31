@@ -28,7 +28,7 @@ export class TaxFilingFormComponent implements OnInit {
     vatMonth: new FormControl('', Validators.required),
     vatYear: new FormControl('', Validators.required),
     totalTaxable: new FormControl('', Validators.required),
-    totalVatRemitted: new FormControl(''),
+    totalVatRemitted: new FormControl('', Validators.required),
     surcharge: new FormControl({ value: '', disabled: true }),
     penalty: new FormControl({ value: '', disabled: true }),
     totalAmountVat: new FormControl({ value: '', disabled: true }),
@@ -79,5 +79,9 @@ export class TaxFilingFormComponent implements OnInit {
       const totalAmountVat = Number(totalVatRemitted) + Number(surcharge) + Number(penalty);
       this.form.controls['totalAmountVat'].setValue(totalAmountVat.toFixed(2));
     });
+  }
+
+  public setMarkAllAsTouch(): void {
+    this.form.markAllAsTouched();
   }
 }

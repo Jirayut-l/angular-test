@@ -1,7 +1,7 @@
 <div class="simple-example">
   <h2>Example 1: Basic Stepper</h2>
-  <app-tax-filing-stepper>
-    <cdk-step>
+  <app-tax-filing-stepper linear>
+    <cdk-step [stepControl]="form">
       <div class="card mt-5">
         <div class="card-body">
           <form [formGroup]="form">
@@ -168,10 +168,11 @@
           </form>
         </div>
       </div>
-
-      <div class="mt-3">
-        <button type="button" class="btn btn-secondary btn-lg">Back</button>
-        <button type="button" class="btn btn-primary btn-lg mx-3">Next</button>
+      <div class="mt-3 mb-3">
+        <button type="button" class="btn btn-secondary btn-lg" cdkStepperPrevious>Back</button>
+        <button type="button" class="btn btn-primary btn-lg mx-3" (click)="setMarkAllAsTouch()" cdkStepperNext>
+          Next
+        </button>
       </div>
     </cdk-step>
     <cdk-step>
@@ -184,8 +185,8 @@
             </div>
             <div class="tax-filing-detail">
               <div class="type-of-filing">
-                <label id="label-type-of-filing" class="form-label d-block">Type of filing</label>
-                <label id="label-vat-month" title="Pay Type">VAT Month</label>
+                <label id="label-show-type-of-filing" class="form-label d-block">Type of filing</label>
+                <label id="label-show-vat-month" title="Pay Type">VAT Month</label>
               </div>
             </div>
             <div class="head-tax-computation pt-3">
@@ -228,6 +229,11 @@
 
       <div class="mt-4 text-center">
         <button type="button" class="btn btn-primary">Confirm and Submit</button>
+      </div>
+
+      <div class="mt-3 mb-3">
+        <button type="button" class="btn btn-secondary btn-lg" cdkStepperPrevious>Back</button>
+        <button type="button" class="btn btn-primary btn-lg mx-3" cdkStepperNext>Next</button>
       </div>
     </cdk-step>
   </app-tax-filing-stepper>
