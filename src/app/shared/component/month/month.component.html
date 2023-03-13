@@ -1,0 +1,7 @@
+<select id="vat-month" class="form-select" [formControl]="Form">
+  <option value="">Selection</option>
+  <option *ngFor="let month of monthList; index as i" [disabled]="disabledMonth(i)" [value]="month.value">
+    {{ month.text }}
+  </option>
+</select>
+<span *ngIf="Form.touched && Form.errors?.['required']" class="help-block">{{ messageError }}</span>

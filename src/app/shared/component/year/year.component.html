@@ -1,0 +1,7 @@
+<select id="vat-year" class="form-select" [formControl]="Form">
+  <option value="">Selection</option>
+  <option *ngFor="let year of years" [value]="year">
+    {{ year }}
+  </option>
+</select>
+<span *ngIf="Form.touched && Form.errors?.['required']" class="help-block">{{ messageError }}</span>
